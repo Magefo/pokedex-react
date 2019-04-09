@@ -10,7 +10,7 @@ export default function () {
 					<img src="/img/pokemon-logo.png" alt="Pokemon" />
 					<h6>Pokedex</h6>
 				</header>
-				<RouterOutlet pokemonService={this.pokemonService} />
+				<RouterOutlet pokemonService={this.pokemonService} gameService={this.gameService} />
 			</div>
 		</Router >
 	);

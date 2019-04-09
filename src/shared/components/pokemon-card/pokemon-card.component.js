@@ -16,11 +16,14 @@ class PokemonCardComponent extends Component {
 		});
 	}
 
-	handleClick = function() {
+	select() {
+		this.props.onSelect(this.state.pokemon);
+	}
+
+	showDetail() {
 		this.props.pokemonService.selectedPokemon = Object.assign({}, this.state.pokemon);
 		this.setState({ redirect: true });
 	}
-
 
 	render = template;
 }

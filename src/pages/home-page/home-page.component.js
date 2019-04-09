@@ -3,6 +3,7 @@ import { fromEvent } from 'rxjs';
 
 import './home-page.component.scss';
 import template from './home-page.component.jsx';
+import { isNullOrUndefined } from 'util';
 
 class HomePageComponent extends Component {
 
@@ -14,7 +15,7 @@ class HomePageComponent extends Component {
 		this.state = {
 			pokemons: []
 		};
-
+		this.props.gameService.resetPlayers();
 		this.pokemonListSubscription = props.pokemonService.getPokemonList().subscribe(pokemons => {
 			this.setState({
 				pokemons: Object.assign([], pokemons)
@@ -40,6 +41,15 @@ class HomePageComponent extends Component {
 					pokemons: this.state.pokemons.concat(pokemons)
 				});
 			});
+		}
+	}
+
+	selectPokemon(pokemon) {
+		if (isNullOrUndefined(this.props.gameService.player1)) {
+			this.props.gameService.player1 = pokemon;
+		} else {
+			this.props.gameService.player2 = pokemon;
+			this.setState({ redirect: true });
 		}
 	}
 

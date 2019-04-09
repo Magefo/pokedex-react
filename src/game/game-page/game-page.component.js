@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Stage, Bitmap } from '@createjs/easeljs';
+import { isNullOrUndefined } from 'util';
 
 import './game-page.component.scss';
 import template from './game-page.component.jsx';
@@ -15,8 +16,10 @@ class GamePageComponent extends Component {
 	}
 
 	componentDidMount() {
-		this.stage = new Stage('game-canvas');
-		this.preload();
+		if (!isNullOrUndefined(this.props.gameService.player1) || !isNullOrUndefined(this.props.gameService.player2)) {
+			this.stage = new Stage('game-canvas');
+			this.preload();
+		}
 	}
 
 	preload() {
@@ -24,8 +27,8 @@ class GamePageComponent extends Component {
 		this.queue.on('complete', handleComplete, this);
 		this.queue.loadManifest([
 			{ id: 'background', src: '/sprites/battle-background.png' },
-			{ id: 'player1', src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/6.png' },
-			{ id: 'player2', src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png' },
+			{ id: 'player1', src: this.props.gameService.player1.sprites.back_default },
+			{ id: 'player2', src: this.props.gameService.player2.sprites.front_default },
 		]);
 
 		function handleComplete() {
