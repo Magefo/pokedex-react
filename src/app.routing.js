@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { lazy, Suspense} from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import HomePageComponent from './pages/home-page/home-page.component';
 import DetailPageComponent from './pages/detail-page/detail-page.component';
-
+const GamePageComponent = lazy(() => import('./game/game-page/game-page.component'));
 
 const routes = [
 	{
@@ -13,11 +13,15 @@ const routes = [
 	{
 		path: "/detail",
 		component: DetailPageComponent
+	},
+	{
+		path: "/game",
+		component: GamePageComponent
 	}
 ];
 
 const RouterOutlet = function (customProps) {
-	return routes.map((route, i) => (
+	const customRoutes = routes.map((route, i) => (
 		<Route
 			exact
 			key={i}
@@ -28,6 +32,14 @@ const RouterOutlet = function (customProps) {
 			}}
 		/>
 	));
+
+	return (
+		<Router>
+			<Suspense fallback={<div>loading...</div>}>
+				{customRoutes}
+			</Suspense>
+		</Router>
+	);
 }
 
 export default RouterOutlet;
