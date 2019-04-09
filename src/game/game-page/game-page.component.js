@@ -3,6 +3,7 @@ import { Stage, Bitmap } from '@createjs/easeljs';
 
 import './game-page.component.scss';
 import template from './game-page.component.jsx';
+const createjs = window.createjs;
 
 class GamePageComponent extends Component {
 
@@ -11,6 +12,9 @@ class GamePageComponent extends Component {
 
 	constructor(props) {
 		super(props);
+	}
+
+	componentDidMount() {
 		this.stage = new Stage('game-canvas');
 		this.preload();
 	}
@@ -19,7 +23,7 @@ class GamePageComponent extends Component {
 		this.queue = new createjs.LoadQueue();
 		this.queue.on('complete', handleComplete, this);
 		this.queue.loadManifest([
-			{ id: 'background', src: '/assets/sprites/battle-background.png' },
+			{ id: 'background', src: '/sprites/battle-background.png' },
 			{ id: 'player1', src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/6.png' },
 			{ id: 'player2', src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png' },
 		]);
